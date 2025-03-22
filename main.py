@@ -1,0 +1,46 @@
+from llm import generate_response
+
+sample_input = {
+        "candidate-name": "Narendra Modi",
+        "political-party": "Bharatiya Janata Party (BJP)",
+        "other-party": "Indian National Congress, Bharat Rashtra Samithi (BRS)",
+        "office-sought": "Prime Minister of India",
+        "bio": "Narendra Damodardas Modi[a] (born 17 September 1950)[b] is an Indian politician who has served as the prime minister of India since 2014. Modi was the chief minister of Gujarat from 2001 to 2014 and is the member of parliament (MP) for Varanasi. He is a member of the Bharatiya Janata Party (BJP) and of the Rashtriya Swayamsevak Sangh (RSS), a far-right Hindu nationalist paramilitary volunteer organisation. He is the longest-serving prime minister outside the Indian National Congress.[4] Modi was born and raised in Vadnagar in northeastern Gujarat, where he completed his secondary education. He was introduced to the RSS at the age of eight. At the age of 18, he was married to Jashodaben Modi, whom he abandoned soon after, only publicly acknowledging her four decades later when legally required to do so. Modi became a full-time worker for the RSS in Gujarat in 1971. The RSS assigned him to the BJP in 1985 and he rose through the party hierarchy, becoming general secretary in 1998.[c] In 2001, Modi was appointed chief minister of Gujarat and elected to the legislative assembly soon after. His administration is considered complicit in the 2002 Gujarat riots,[d] and has been criticised for its management of the crisis. According to official records, a little over 1,000 people were killed, three-quarters of whom were Muslim; independent sources estimated 2,000 deaths, mostly Muslim.[13] A Special Investigation Team appointed by the Supreme Court of India in 2012 found no evidence to initiate prosecution proceedings against him.[e] While his policies as chief minister were credited for encouraging economic growth, his administration was criticised for failing to significantly improve health, poverty and education indices in the state.[f] In the 2014 Indian general election, Modi led the BJP to a parliamentary majority, the first for a party since 1984. His administration increased direct foreign investment, and reduced spending on healthcare, education, and social-welfare programmes. Modi began a high-profile sanitation campaign, and weakened or abolished environmental and labour laws. His demonetisation of banknotes in 2016 and introduction of the Goods and Services Tax in 2017 sparked controversy. Modi's administration launched the 2019 Balakot airstrike against an alleged terrorist training camp in Pakistan. The airstrike failed,[16][17] but the action had nationalist appeal.[18] Modi's party won the 2019 general election which followed.[19] In its second term, his administration revoked the special status of Jammu and Kashmir,[20][21] and introduced the Citizenship Amendment Act, prompting widespread protests, and spurring the 2020 Delhi riots in which Muslims were brutalised and killed by Hindu mobs.[22][23][24] Three controversial farm laws led to sit-ins by farmers across the country, eventually causing their formal repeal. Modi oversaw India's response to the COVID-19 pandemic, during which, according to the World Health Organization's estimates, 4.7 million Indians died.[25][26] In the 2024 general election, Modi's party lost its majority in the lower house of Parliament and formed a government leading the National Democratic Alliance coalition.[27][28] Under Modi's tenure, India has experienced democratic backsliding, or the weakening of democratic institutions, individual rights, and freedom of expression.[29][30][g] As prime minister, he has received consistently high approval ratings.[36][37][38] Modi has been described as engineering a political realignment towards right-wing politics. He remains a controversial figure domestically and internationally, over his Hindu nationalist beliefs and handling of the Gujarat riots, which have been cited as evidence of a majoritarian and exclusionary social agenda.[h]",
+        "key-strengths": "Strong leadership, infrastructure development, national security focus, economic reforms, cultural heritage preservation",
+        "target-demographic": "Residents of Warangal, Telangana; focus on urban middle class, youth, farmers, and small business owners",
+        "primary-concerns": "Local infrastructure development, employment opportunities, agricultural support, cultural heritage preservation, education",
+        "cultural-beliefs": "Respect for Telangana culture and heritage, Hindu traditions, national pride, inclusive development",
+        "existing-values": "Hard work, family values, entrepreneurship, respect for tradition while embracing progress",
+        "slogan": "Sabka Saath, Sabka Vikas, Sabka Vishwas - Prosperous Warangal, Vibrant Telangana",
+        "main-message": "Transforming Warangal into a center of heritage tourism and modern development while preserving its cultural identity",
+        "tone": "Empowering, confident, respectful of local traditions",
+        "cultural-context": "References to Kakatiya dynasty, Warangal Fort, local festivals, and Telangana movement",
+        "formality": "Formal with approachable elements that connect with local residents",
+        "speech-length": "Medium (10-15 minutes)",
+        "speech-type": "Local campaign rally speech",
+        "primary-objective": "Build support for BJP in Warangal region by connecting national vision to local development",
+        "secondary-objective": "Address specific concerns of Warangal residents and outline targeted development plans",
+        "age-range": "All adult voters with emphasis on youth and middle-aged residents",
+        "education-level": "Mixed - accessible to all education levels from rural farmers to urban professionals",
+        "caste-community": "Inclusive appeal to all communities with sensitivity to local social dynamics",
+        "religious-affiliation": "Respectful of Hindu traditions while acknowledging religious diversity in the region",
+        "political-climate": "Competitive region with strong presence of regional parties (BRS) and Congress",
+        "recent-events": "Infrastructure projects in Telangana, textile industry initiatives, tourism development efforts",
+        "geographic-location": "Warangal, Telangana",
+        "key-messages": "Heritage tourism development, educational opportunities, textile industry revival, agricultural support, infrastructure improvement",
+        "data-upload": "",
+        "story-elements": "References to Warangal's glorious history under Kakatiya dynasty, transformation stories of similar cities, personal connections to the region",
+        "call-to-action": "Vote for BJP to make Warangal a model city combining heritage and development",
+        "cta-instructions": "Encourage voters to support BJP candidates in upcoming elections and become ambassadors for change in their communities",
+        "speech-tone": "Empowering, optimistic, respectful, visionary",
+        "language-dialect": "English with occasional Telugu phrases to connect with local audience",
+        "rhetorical-devices": "Historical parallels between Kakatiya glory and future potential, metaphors related to weaving (connecting to local textile industry), rhetorical questions about region's aspirations",
+        "speech-preview": "",
+        "export-options": "text",
+        "policy-points": "Heritage tourism circuit development, textile industry modernization, educational institutions expansion, agricultural support schemes, infrastructure connectivity projects",
+        "retrieved_info": "",
+        "page": "page3"
+    }
+
+response = generate_response(sample_input)
+print("Generated Response:", response)
