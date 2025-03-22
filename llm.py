@@ -4,6 +4,7 @@ from config import MODEL, SYSTEMPROMPT, MODEL_URL, OPENAI_API
 from openai import OpenAI
 import json
 import re
+from database import table
 
 client_openai = OpenAI(api_key=OPENAI_API, base_url=MODEL_URL)
 
@@ -12,14 +13,14 @@ def generate_response(data: dict) -> str:
         data["political-party"] = data.get("other-party", "")
 
     query = f"{data.get('candidate-name', '')} {data.get('political-party', '')}"
-    data["retrieved_info"] = search_with_threshold(query, threshold=0.50)
+    data["retrieved_info"] = search_with_threshold(table, query, threshold=0.80)
 
     formatted_prompt = substitute_template(data)
     print("🔹 Full Prompt:\n", formatted_prompt)
 
     message_list = [{"role": "user", "content": formatted_prompt}]
 
-    return "It works bro"
+    # return "It works bro"
 
     response = client_openai.chat.completions.create(
         model=MODEL,

@@ -6,3 +6,4 @@ requests
 pydantic
 sentence-transformers
 pandas
+flask
