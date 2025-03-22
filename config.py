@@ -1,6 +1,8 @@
 DB_PATH = "./data/lancedb"
 SERPER_API_KEY = "8c7da3371344a1e17f798c884aa504c399498b68"
 SERPER_API_HOST = "google.serper.dev"
+OPENAI_API = "aMn5STDhSBDorVIhh8u5DalCUceRniQg"
+MODEL_URL = "https://api.deepinfra.com/v1/openai"
 MODEL = "deepseek-ai/DeepSeek-V3"
 
 TEMPLATE = """

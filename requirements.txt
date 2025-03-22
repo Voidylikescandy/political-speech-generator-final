@@ -1,0 +1,8 @@
+lancedb
+langchain-text-splitters
+openai
+beautifulsoup4
+requests
+pydantic
+sentence-transformers
+pandas

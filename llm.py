@@ -1,11 +1,11 @@
 from retriever import search_with_threshold
 from text_processing import substitute_template
-from config import MODEL, SYSTEMPROMPT
+from config import MODEL, SYSTEMPROMPT, MODEL_URL, OPENAI_API
 from openai import OpenAI
 import json
 import re
 
-client_openai = OpenAI(api_key="aMn5STDhSBDorVIhh8u5DalCUceRniQg", base_url="https://api.deepinfra.com/v1/openai")
+client_openai = OpenAI(api_key=OPENAI_API, base_url=MODEL_URL)
 
 def generate_response(data: dict) -> str:
     if data.get("political-party") == "other":
@@ -18,6 +18,8 @@ def generate_response(data: dict) -> str:
     print("🔹 Full Prompt:\n", formatted_prompt)
 
     message_list = [{"role": "user", "content": formatted_prompt}]
+
+    return "It works bro"
 
     response = client_openai.chat.completions.create(
         model=MODEL,
