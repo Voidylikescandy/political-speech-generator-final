@@ -43,6 +43,7 @@ TEMPLATE = """
     policy-points: {policy-points}  
     retrieved_info: {retrieved_info}   
 """
+
 SYSTEMPROMPT = """
     You are a skilled political speech writer tasked with creating a personalized, compelling speech for
     a political candidate. Your goal is to craft a persuasive speech that resonates with the target

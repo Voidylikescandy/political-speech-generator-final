@@ -30,14 +30,14 @@ def fetch_additional_results(table, query, min_results=4):
     data = {}
 
     for attempt in range(1, retries + 1):
-        print(f"Trying {attempt}/{retries}")
+        # print(f"Trying {attempt}/{retries}")
         data = serper_search(query, num_results=min_results)
         
         if data.get("organic"):
             break
         time.sleep(1)
 
-    print(f"Retrieved {len(data.get('organic', []))} results")
+    # print(f"Retrieved {len(data.get('organic', []))} results")
     
     # Dictionary to store link -> extracted text mapping
     results = {}
@@ -51,11 +51,12 @@ def fetch_additional_results(table, query, min_results=4):
                 # Check if the source_id exists using a where clause
                 existing_records = table.search("").where(f"source_id = '{source_id}'").limit(1).to_pandas()
                 if len(existing_records) > 0:
-                    print(f"Skipping {source_id} - already in database")
+                    # print(f"Skipping {source_id} - already in database")
                     continue
             except Exception as e:
                 # If there's an error (e.g., column doesn't exist yet), proceed with extraction
-                print(f"Error checking for existing source_id: {e}")
+                # print(f"Error checking for existing source_id: {e}")
+                pass
             
             extracted_text = extract_p_tags(link)
             if extracted_text:

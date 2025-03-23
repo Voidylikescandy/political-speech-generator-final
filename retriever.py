@@ -31,16 +31,16 @@ def search_with_threshold(table, query, threshold=0.85, metric="cosine", limit=5
     
     # Filter based on threshold
     filtered_results = results_df[results_df["similarity_score"] >= threshold]
-    print(f"Fetched {len(filtered_results)} results from database that meet the threshold")
+    # print(f"Fetched {len(filtered_results)} results from database that meet the threshold")
 
     # If we don't have enough results and haven't exceeded max recursion
     if len(filtered_results) < 2 and recursion_depth < max_recursion:
-        print(f"Invoking Serper API (recursion depth: {recursion_depth+1}/{max_recursion})")
-        additional_results = fetch_additional_results(table, query, min_results=5)
+        # print(f"Invoking Serper API (recursion depth: {recursion_depth+1}/{max_recursion})")
+        additional_results = fetch_additional_results(query, min_results=5)
         
         # Only proceed if we actually got new results
         if additional_results:
-            print(f"Adding {len(additional_results)} new sources to the database")
+            # print(f"Adding {len(additional_results)} new sources to the database")
             insert_text_into_db(additional_results)
             
             # Recursively search again with incremented recursion depth
@@ -49,12 +49,13 @@ def search_with_threshold(table, query, threshold=0.85, metric="cosine", limit=5
                 limit=limit, recursion_depth=recursion_depth+1, max_recursion=max_recursion
             )
         else:
-            print("No new sources found. Using current results.")
+            # print("No new sources found. Using current results.")
+            pass
     
     # If we still don't have enough results after recursion or API calls,
     # we'll just return what we have
     if len(filtered_results) == 0:
-        print("Warning: No results meet the similarity threshold.")
+        # print("Warning: No results meet the similarity threshold.")
         return ""
     
     return "\n".join(filtered_results["text"])
