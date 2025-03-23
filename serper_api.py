@@ -3,9 +3,11 @@ import http.client
 import time
 from scraper import extract_p_tags
 from config import SERPER_API_KEY, SERPER_API_HOST
+from logger import logger
 
 def serper_search(query, num_results=1, pages=1):
     """Fetches search results from Serper API."""
+    logger.info(f"Searching Serper API for query: {query}")
     conn = http.client.HTTPSConnection(SERPER_API_HOST)
     headers = {
         'X-API-KEY': SERPER_API_KEY,
@@ -22,6 +24,7 @@ def serper_search(query, num_results=1, pages=1):
     conn.request("POST", "/search", payload, headers)
     res = conn.getresponse()
     data = res.read().decode("utf-8")
+    logger.info("Received response from Serper API")
     return json.loads(data)
 
 def fetch_additional_results(table, query, min_results=4):
@@ -30,15 +33,18 @@ def fetch_additional_results(table, query, min_results=4):
     data = {}
 
     for attempt in range(1, retries + 1):
+        logger.info(f"Attempt {attempt}/{retries} to fetch additional results")
         # print(f"Trying {attempt}/{retries}")
         data = serper_search(query, num_results=min_results)
         
         if data.get("organic"):
+            logger.info("Successfully retrieved organic search results")
             break
         time.sleep(1)
 
     # print(f"Retrieved {len(data.get('organic', []))} results")
-    
+    logger.info(f"Retrieved {len(data.get('organic', []))} results")
+
     # Dictionary to store link -> extracted text mapping
     results = {}
     
@@ -51,15 +57,18 @@ def fetch_additional_results(table, query, min_results=4):
                 # Check if the source_id exists using a where clause
                 existing_records = table.search("").where(f"source_id = '{source_id}'").limit(1).to_pandas()
                 if len(existing_records) > 0:
+                    logger.info(f"Skipping {source_id} - already in database")
                     # print(f"Skipping {source_id} - already in database")
                     continue
             except Exception as e:
                 # If there's an error (e.g., column doesn't exist yet), proceed with extraction
+                logger.warning(f"Error checking for existing source_id {source_id}: {e}")
                 # print(f"Error checking for existing source_id: {e}")
                 pass
             
             extracted_text = extract_p_tags(link)
             if extracted_text:
+                logger.info(f"Extracted text from {source_id}")
                 results[link] = extracted_text
 
     return results
