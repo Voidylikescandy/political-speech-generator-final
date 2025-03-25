@@ -36,7 +36,7 @@ def search_with_threshold(table, query, threshold=0.85, metric="cosine", limit=5
     # If we don't have enough results and haven't exceeded max recursion
     if len(filtered_results) < 2 and recursion_depth < max_recursion:
         # print(f"Invoking Serper API (recursion depth: {recursion_depth+1}/{max_recursion})")
-        additional_results = fetch_additional_results(query, min_results=5)
+        additional_results = fetch_additional_results(table, query, min_results=5)
         
         # Only proceed if we actually got new results
         if additional_results:

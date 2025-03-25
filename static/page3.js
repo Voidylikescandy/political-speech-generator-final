@@ -28,8 +28,30 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .then(response => response.json())
     .then(result => {
-      // Print the response (final speech draft) in the textarea with id "speech-draft"
-      document.getElementById("speech-draft").value = result.response;
+        const speechText = result.response; // Get text from backend
+        // Extract speech (until "key_themes")
+          const speechMatch = speechText.match(/"speech":\s*"([\s\S]*?)"\s*,\s*"key_themes"/);
+          const speech = speechMatch ? speechMatch[1].trim() : "";
+  
+          // Extract key themes
+          const keyThemesMatch = speechText.match(/"key_themes":\s*\[\s*([\s\S]*?)\s*\]/);
+          const keyThemes = keyThemesMatch 
+              ? keyThemesMatch[1].match(/"([^"]+)"/g).map(s => s.replace(/"/g, '')).join(', ') 
+              : "";
+  
+          // Extract category
+          const categoryMatch = speechText.match(/"category":\s*"([^"]+)"/);
+          const category = categoryMatch ? categoryMatch[1] : "";
+  
+          // Extract explanation (until end)
+          const explanationMatch = speechText.match(/"explanation":\s*"([\s\S]*?)"\s*\}/);
+          const explanation = explanationMatch ? explanationMatch[1].trim() : "";
+  
+          console.log("Speech:", speech);
+          console.log("Key Themes:", keyThemes);
+          console.log("Category:", category);
+          console.log("Explanation:", explanation);
+          document.getElementById("speech-draft").value = speech; // Display in textarea
     })
     .catch(error => {
       console.error("Error generating speech draft:", error);
