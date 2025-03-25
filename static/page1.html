@@ -277,12 +277,12 @@
                 <label for="political-party">Political Party:</label>
                 <select id="political-party">
                     <option value="">Select Party</option>
-                    <option value="bjp">BJP</option>
-                    <option value="congress">Congress</option>
-                    <option value="aap">AAP</option>
-                    <option value="dmk">DMK</option>
-                    <option value="tmc">TMC</option>
-                    <option value="bjd">BJD</option>
+                    <option value="Bharatiya Janata Party">BJP</option>
+                    <option value="Indian National Congress">Congress</option>
+                    <option value="Aam Aadmi Party">AAP</option>
+                    <option value="Dravida Munnetra Kazhagam">DMK</option>
+                    <option value="All India Trinamool Congress">TMC</option>
+                    <option value="Biju Janata Dal">BJD</option>
                     <option value="other">Other (Specify Below)</option>
                 </select>
                 <input id="other-party" placeholder="Enter regional party name" type="text" disabled>
@@ -302,13 +302,14 @@
             
               <div class="form-group">
                 <label for="office-sought">Office Sought:</label>
-                <select id="office-sought">
+                <!-- <select id="office-sought">
                   <option value="">Select Office</option>
-                  <option value="mla">MLA</option>
-                  <option value="mp">MP</option>
-                  <option value="cm">Chief Minister</option>
-                  <option value="pm">Prime Minister</option>
-                </select>
+                  <option value="Member of the Legislative Assembly">MLA</option>
+                  <option value="Member of Parliament">MP</option>
+                  <option value="Chief Minister">Chief Minister</option>
+                  <option value="Prime Minister">Prime Minister</option>
+                </select> -->
+                <textarea id="office-sought"></textarea>
               </div>
               <div class="form-group">
                 <label for="bio">Brief Bio (Max 500 words):</label>
@@ -316,7 +317,7 @@
               </div>
               <div class="form-group">
                 <label for="key-strengths">Key Strengths/Expertise:</label>
-                <select multiple id="key-strengths" class="multi-select">
+                <!-- <select multiple id="key-strengths" class="multi-select">
                     <option value="agriculture">Agriculture</option>
                     <option value="healthcare">Healthcare</option>
                     <option value="education">Education</option>
@@ -324,7 +325,8 @@
                     <option value="infrastructure">Infrastructure</option>
                     <option value="water-management">Water Management</option>
                     <option value="environment">Environment</option>
-                </select>
+                </select> -->
+                <textarea id="key-strengths" placeholder="Agriculture, Healthcare, Education etc..."></textarea>
             </div>
             
             
@@ -338,30 +340,33 @@
               </div>
               <div class="form-group">
                 <label for="primary-concerns">Primary Concerns/Needs:</label>
-                <select multiple id="primary-concerns" class="multi-select">
+                <!-- <select multiple id="primary-concerns" class="multi-select">
                   <option value="crop-insurance">Crop Insurance</option>
                   <option value="water-scarcity">Water Scarcity</option>
                   <option value="job-creation">Job Creation</option>
                   <option value="affordable-healthcare">Affordable Healthcare</option>
-                </select>
+                </select> -->
+                <textarea id="primary-concerns" placeholder="Farmer distress, unemployment, healthcare access etc..."></textarea>
               </div>
               <div class="form-group">
                 <label for="cultural-beliefs">Cultural and Religious Beliefs:</label>
-                <select multiple id="cultural-beliefs" class="multi-select">
+                <!-- <select multiple id="cultural-beliefs" class="multi-select">
                   <option value="diwali">Diwali</option>
                   <option value="eid">Eid</option>
                   <option value="pongal">Pongal</option>
                   <option value="bihu">Bihu</option>
-                </select>
+                </select> -->
+                <textarea id="cultural-beliefs" placeholder="Democratic values, secularism, social justice, festivals etc..."></textarea>
               </div>
               <div class="form-group">
                 <label for="existing-values">Existing Values/Beliefs:</label>
-                <select multiple id="existing-values" class="multi-select">
+                <!-- <select multiple id="existing-values" class="multi-select">
                   <option value="inclusiveness">Inclusiveness</option>
                   <option value="nationalism">Nationalism</option>
                   <option value="social-justice">Social Justice</option>
                   <option value="economic-development">Economic Development</option>
-                </select>
+                </select> -->
+                <textarea id="existing-values" placeholder="Constitutional principles, rights of marginalized communities, social justice, economic development etc..."></textarea>
               </div>
             </div>
             
@@ -385,11 +390,12 @@
               <h2>Speech Tone and Style</h2>
               <div class="form-group slider">
                 <label for="tone">Emotional Tone:</label>
-                <input id="tone" min="1" max="3" type="range" value="3">
-                <span id="tone-label">Emotional</span>
+                <!-- <input id="tone" min="1" max="3" type="range" value="3">
+                <span id="tone-label">Emotional</span> -->
+                <textarea id="tone" placeholder="Subdued or neutral or emotional etc..."></textarea>
             </div>
             
-            <script>
+            <!-- <script>
             document.getElementById("tone").addEventListener("input", function() {
                 const toneLabel = document.getElementById("tone-label");
                 const value = this.value;
@@ -402,7 +408,7 @@
                     toneLabel.textContent = "Emotional";
                 }
             });
-            </script>
+            </script> -->
             
               <div class="form-group slider">
                 <label for="cultural-context">Cultural Context:</label>
@@ -410,15 +416,16 @@
               </div>
               <div class="form-group slider">
                 <label for="formality">Formality Level:</label>
-                <select id="formality">
+                <!-- <select id="formality">
                   <option value="formal">Formal</option>
                   <option value="semi-formal">Semi-Formal</option>
                   <option value="conversational">Conversational</option>
-                </select>
+                </select> -->
+                <textarea id="formality" placeholder="Formal or Semi Formal etc..."></textarea>
               </div>
               <div class="form-group slider">
                 <label for="speech-length">Speech Length:</label>
-                <input id="speech-length" placeholder="Enter duration (e.g., 5 minutes)" type="text" value="">
+                <input id="speech-length" placeholder="Enter duration (e.g., 5 minutes or 500 words)" type="text" value="">
               </div>
             </div>
             

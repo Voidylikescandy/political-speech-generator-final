@@ -47,9 +47,8 @@ def generate_response(data: dict) -> str:
     logger.info("Retrieved information successfully")
 
     formatted_prompt = substitute_template(data)
-    print("🔹 Full Prompt:\n", formatted_prompt)
     logger.info("Formatted prompt succesfully")
-    logger.debug(f"Full Prompt : {formatted_prompt}")
+    logger.debug(f"Full Prompt:\n {formatted_prompt}")
 
     message_list = [
         {

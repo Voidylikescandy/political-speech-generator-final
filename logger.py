@@ -2,7 +2,7 @@ import logging
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,  # Set logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    level=logging.DEBUG,  # Set logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
     format="%(asctime)s - %(name)s - %(levelname)s - %(filename)s - %(message)s",
     handlers=[
         logging.FileHandler("app.log"),  # Log to file

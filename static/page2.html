@@ -300,23 +300,29 @@
           <div class="tab-header">2. Audience &amp; Context</div>
           <div class="form-group">
             <label for="audience-demographics">Audience Demographics</label>
+            <label for="age-range">Age range</label>
             <input id="age-range" placeholder="Age Range (e.g., 18-60)" type="text">
-            <select id="education-level">
+            <label id="education-level">Education Level</label>
+            <!-- <select id="education-level">
               <option value="">Select Education Level</option>
               <option value="illiterate">Illiterate</option>
               <option value="primary">Primary</option>
               <option value="secondary">Secondary</option>
               <option value="graduate">Graduate</option>
-            </select>
+            </select> -->
+            <textarea id="education-level" placeholder="Primary, Secondary, Illiterate etc..."></textarea>
+            <label id="caste-community">Caste/Community</label>
             <input id="caste-community" placeholder="Caste/Community" type="text">
-            <select id="religious-affiliation">
+            <!-- <select id="religious-affiliation">
               <option value="">Religious Affiliation</option>
               <option value="hindu">Hindu</option>
               <option value="muslim">Muslim</option>
               <option value="christian">Christian</option>
               <option value="sikh">Sikh</option>
               <option value="other">Other</option>
-            </select>
+            </select> -->
+            <label id="religious-affiliation">Religious Affiliation</label>
+            <textarea id="religious-affiliation" placeholder="Hindu, Christian etc...."></textarea>
           </div>
           <div class="form-group">
             <label for="political-climate">Current Political Climate</label>
@@ -347,12 +353,14 @@
           </div>
           <div class="form-group">
             <label for="call-to-action">Call to Action</label>
-            <select id="call-to-action">
+            <!-- <select id="call-to-action">
               <option value="">Select Call to Action</option>
               <option value="donate">Donate</option>
               <option value="volunteer">Volunteer</option>
               <option value="vote">Vote</option>
-            </select>
+            </select> -->
+            <textarea id="call-to-action" placeholder="Donate, Volunteer, Vote etc..."></textarea>
+            <label id="cta-instructions">Call to action instructions</label>
             <textarea id="cta-instructions" placeholder="Specific instructions for the call to action"></textarea>
           </div>
         </div>
