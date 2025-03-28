@@ -24,7 +24,7 @@ def process_prompt():
     response = generate_response(data)
     # print("Generated Response:", response)
 
-    return jsonify({"response": response})
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(debug=False)

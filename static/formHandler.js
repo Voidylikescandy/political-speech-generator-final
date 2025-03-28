@@ -122,6 +122,18 @@ function getAllFieldData() {
     doc.save("Final_Speech.pdf"); // Download PDF
 }
 
+function downloadAsJSON(data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+let cachedResponse = null;
   
   /**
    * On the final page, save page3 data, combine with data from page1 and page2,
@@ -134,67 +146,57 @@ function getAllFieldData() {
     const page2Data = JSON.parse(localStorage.getItem("page2Data") || "{}");
     const page3Data = JSON.parse(localStorage.getItem("page3Data") || "{}");
   
-    // Combine all data (later values overwrite earlier ones if keys match)
     const combinedData = Object.assign({}, page1Data, page2Data, page3Data, { page: "page3" });
-  
+    
+    const speechDraftElement = document.getElementById("speech-draft");
+    const speechDraftContent = speechDraftElement.value.trim();
+    
+    // Check conditions: if speech-draft is non-empty and cachedResponse is available, use cached data
+    if (speechDraftContent && cachedResponse) {
+        console.log("Using cached response");
+        processResponse(cachedResponse);
+        return;
+    }
+
+    // Otherwise, fetch new data from the API
     fetch('/process', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(combinedData)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(combinedData)
     })
     .then(response => response.json())
-    .then(result => {
-      // Print the response in the textarea with id "speech-draft"
-    //   document.getElementById("speech-draft").value = result.response;
-      // Optionally, clear localStorage here if you want to reset the form completely:
-      // localStorage.clear();
-      const speechText = result.response; // Get text from backend
-      // Extract speech (until "key_themes")
-        const speechMatch = speechText.match(/"speech":\s*"([\s\S]*?)"\s*,\s*"key_themes"/);
-        const speech = speechMatch ? speechMatch[1].trim() : "";
-
-        // Extract key themes
-        const keyThemesMatch = speechText.match(/"key_themes":\s*\[\s*([\s\S]*?)\s*\]/);
-        const keyThemes = keyThemesMatch 
-            ? keyThemesMatch[1].match(/"([^"]+)"/g).map(s => s.replace(/"/g, '')).join(', ') 
-            : "";
-
-        // Extract category
-        const categoryMatch = speechText.match(/"category":\s*"([^"]+)"/);
-        const category = categoryMatch ? categoryMatch[1] : "";
-
-        // Extract explanation (until end)
-        const explanationMatch = speechText.match(/"explanation":\s*"([\s\S]*?)"\s*\}/);
-        const explanation = explanationMatch ? explanationMatch[1].trim() : "";
-
-        console.log("Speech:", speech);
-        console.log("Key Themes:", keyThemes);
-        console.log("Category:", category);
-        console.log("Explanation:", explanation);
-        document.getElementById("speech-draft").value = speech; // Display in textarea
-        const selectedFormat = document.getElementById("export-options").value;
-        switch (selectedFormat) {
-            case "text":
-                downloadAsText(speech);
-                break;
-            case "pdf":
-                generatePDF(speech);
-                break;
-            case "json":
-                downloadAsText(speechText)
-                break;
-            case "audio":
-                alert("Audio export is not implemented yet.");
-                break;
-            default:
-                alert("Please select a valid format!");
-        }
+    .then(data => {
+        cachedResponse = data; // Store response in cache
+        processResponse(data);
     })
     .catch(error => {
-      console.error('Error:', error);
-      alert("Error communicating with server.");
+        console.error('Error:', error);
+        alert("Error communicating with server.");
     });
-  }
+}
+
+function processResponse(data) {
+    console.log("Full response:", data);
+    console.log("Keys in data:", Object.keys(data));
+    console.log("Speech property:", data.speech);
+    
+    document.getElementById("speech-draft").value = data.speech;
+    const selectedFormat = document.getElementById("export-options").value;
+    
+    switch (selectedFormat) {
+        case "text":
+            downloadAsText(data.speech);
+            break;
+        case "pdf":
+            generatePDF(data.speech);
+            break;
+        case "json":
+            downloadAsJSON(data);
+            break;
+        default:
+            alert("Please select a valid format!");
+    }
+}
   
   // On DOMContentLoaded, load any saved data and override button actions.
   document.addEventListener("DOMContentLoaded", function() {
