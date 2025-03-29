@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from llm import generate_response
+from logger import logger
 
 app = Flask(__name__)
 
@@ -18,12 +19,9 @@ def page3():
 @app.route('/process', methods=['POST'])
 def process_prompt():
     data = request.get_json()
-    print("Received data:", data)
+    logger.info("Received data:", data)
 
-    # You can inspect the object’s separate values here
     response = generate_response(data)
-    # print("Generated Response:", response)
-
     return jsonify(response)
 
 if __name__ == '__main__':

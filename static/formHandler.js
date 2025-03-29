@@ -166,8 +166,15 @@ let cachedResponse = null;
     })
     .then(response => response.json())
     .then(data => {
-        cachedResponse = data; // Store response in cache
-        processResponse(data);
+        // Check if the response contains error and message keys
+        if (data.error && data.message) {
+            // Display error alert with code and message
+            alert(`Error ${data.error}: ${data.message}`);
+        } else {
+            // Process the successful response
+            cachedResponse = data; // Store response in cache
+            processResponse(data);
+        }
     })
     .catch(error => {
         console.error('Error:', error);

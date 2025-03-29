@@ -1,7 +1,7 @@
 from retriever import search_with_threshold
 from text_processing import substitute_template, parse_model_response
 from config import MODEL, SYSTEMPROMPT, MODEL_URL, OPENAI_API
-from openai import OpenAI
+from openai import OpenAI, OpenAIError, ConflictError, NotFoundError, APIStatusError, RateLimitError, APITimeoutError, BadRequestError, APIConnectionError, AuthenticationError, InternalServerError, PermissionDeniedError, LengthFinishReasonError, UnprocessableEntityError, APIResponseValidationError, ContentFilterFinishReasonError, _AmbiguousModuleClientUsageError
 from database import table
 from logger import logger
 
@@ -89,8 +89,56 @@ def generate_response(data: dict) -> str:
             response_format={"type":"json_object"}
         )
         logger.info("Successfully received response from OpenAI API")
+    except RateLimitError as e:
+        logger.error(f"Rate limit exceeded: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Rate limit exceeded. Please try again later: {str(e)}"}
+    except APITimeoutError as e:
+        logger.error(f"API request timed out: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Request to OpenAI API timed out: {str(e)}"}
+    except APIConnectionError as e:
+        logger.error(f"Connection error with OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Failed to connect to OpenAI API. Check your network connection: {str(e)}"}
+    except AuthenticationError as e:
+        logger.error(f"Authentication error with OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Authentication failed. Check your API key: {str(e)}"}
+    except PermissionDeniedError as e:
+        logger.error(f"Permission denied by OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Permission denied to access the requested resource: {str(e)}"}
+    except BadRequestError as e:
+        logger.error(f"Bad request to OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Invalid request parameters sent to OpenAI API: {str(e)}"}
+    except NotFoundError as e:
+        logger.error(f"Resource not found in OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"The requested resource was not found. Check model name: {str(e)}"}
+    except ConflictError as e:
+        logger.error(f"Conflict error with OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Request conflicts with current state of the server: {str(e)}"}
+    except InternalServerError as e:
+        logger.error(f"Internal server error from OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"OpenAI API experienced an internal error. Try again later: {str(e)}"}
+    except UnprocessableEntityError as e:
+        logger.error(f"Unprocessable entity error from OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"The request was well-formed but unable to be processed: {str(e)}"}
+    except ContentFilterFinishReasonError as e:
+        logger.error(f"Content filter triggered in OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Response was filtered due to content safety policies: {str(e)}"}
+    except LengthFinishReasonError as e:
+        logger.error(f"Response length limit reached in OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Response was truncated due to token limit constraints: {str(e)}"}
+    except APIResponseValidationError as e:
+        logger.error(f"API response validation error from OpenAI: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"OpenAI API response failed validation: {str(e)}"}
+    except APIStatusError as e:
+        logger.error(f"API status error from OpenAI: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"OpenAI API returned an unexpected status code: {str(e)}"}
+    except _AmbiguousModuleClientUsageError as e:
+        logger.error(f"Ambiguous module client usage with OpenAI API: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"Ambiguous usage of OpenAI client: {str(e)}"}
+    except OpenAIError as e:
+        logger.error(f"General OpenAI API error: {e}")
+        return {"error": "ERR_API_FAILURE", "message": f"An error occurred with the OpenAI API: {str(e)}"}
     except Exception as e:
-        logger.error(f"Error occurred while generating response: {e}")
+        logger.error(f"Unexpected error occurred while generating response: {e}")
         return {"error": "ERR_API_FAILURE", "message": f"Failed to get response from OpenAI API: {str(e)}"}
 
     content = response.choices[0].message.content
@@ -100,4 +148,8 @@ def generate_response(data: dict) -> str:
         logger.error("Received empty response from API")
         return {"error": "ERR_EMPTY_RESPONSE", "message": "Received empty response from API"}
         
-    return parse_model_response(content)
+    try:
+        return parse_model_response(content)
+    except Exception as e:
+        logger.error(f"Failed to parse model response: {e}")
+        return {"error": "ERR_PARSING_FAILURE", "message": f"Failed to parse model response: {str(e)}"}
