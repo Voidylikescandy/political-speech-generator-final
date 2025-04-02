@@ -33,7 +33,7 @@ def parse_model_response(content):
             raise ValueError("Content must be a non-empty string")
             
         # Regex patterns for extracting key-value pairs
-        speech_pattern = r'"speech"\s*:\s*"([\s\S]*?)"\s*,\s*"key_themes"'
+        speech_pattern = r'"speech"\s*:\s*"([\s\S]*?)(?="\s*,\s*"key_themes")'
         key_themes_pattern = r'"key_themes"\s*:\s*\[(.*?)\]'
         sentiment_pattern = r'"sentiment"\s*:\s*\{(.*?)\}'
 
