@@ -65,7 +65,7 @@ def search_with_threshold(table, query, threshold=0.85, metric="cosine", limit=5
         if len(filtered_results) < 2 and recursion_depth < max_recursion:
             logger.info(f"Invoking Serper API (recursion depth: {recursion_depth+1}/{max_recursion})")    
             try:
-                additional_results = fetch_additional_results(query, min_results=5)
+                additional_results = fetch_additional_results(table,query, min_results=5)
             except Exception as e:
                 logger.error(f"Error fetching additional results: {str(e)}")
                 raise Exception(f"Failed to fetch additional results: {str(e)}")
